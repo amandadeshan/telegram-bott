@@ -1,0 +1,26 @@
+import logging
+from telegram import Update
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
+
+# Configure logging
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+def start(update: Update, context: CallbackContext) -> None:
+    update.message.reply_text('Bot is running!')
+
+def filter_signals(update: Update, context: CallbackContext) -> None:
+    message_text = update.message.text
+    if 'signal' in message_text.lower():  # Filter messages containing 'signal'
+        context.bot.send_message(chat_id='<YOUR_CHAT_ID>', text=message_text)
+
+def main():
+    updater = Updater("YOUR_TELEGRAM_BOT_TOKEN", use_context=True)
+    dp = updater.dispatcher
+    dp.add_handler(CommandHandler("start", start))
+    dp.add_handler(MessageHandler(Filters.text & ~Filters.command, filter_signals))
+    updater.start_polling()
+    updater.idle()
+
+if __name__ == '__main__':
+    main()
