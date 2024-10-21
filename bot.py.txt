@@ -12,10 +12,11 @@ def start(update: Update, context: CallbackContext) -> None:
 def filter_signals(update: Update, context: CallbackContext) -> None:
     message_text = update.message.text
     if 'signal' in message_text.lower():  # Filter messages containing 'signal'
-        context.bot.send_message(chat_id='<YOUR_CHAT_ID>', text=message_text)
+        context.bot.send_message(chat_id='<@testruio>', text=message_text)
 
 def main():
-    updater = Updater("YOUR_TELEGRAM_BOT_TOKEN", use_context=True)
+    updater = Updater("7785262029:AAEdUvNZXsf3BVsfrIOimhkIDLzveFl1cAo
+", use_context=True)
     dp = updater.dispatcher
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(MessageHandler(Filters.text & ~Filters.command, filter_signals))
